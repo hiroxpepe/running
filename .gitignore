@@ -67,3 +67,7 @@ UserSettings
 
 # Unity Recorder
 Recordings
+
+# etc
+/tmp
+/data
