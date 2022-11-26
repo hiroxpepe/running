@@ -109,7 +109,7 @@ namespace Studio.MeowToon {
             /// idol.
             /// </summary>
             this.UpdateAsObservable().Where(predicate: _ => _do_update.grounded && !_up_button.isPressed && !_down_button.isPressed).Subscribe(onNext: _ => {
-                //_simpleAnime.Play("Default");
+                _simple_anime.Play("Default");
                 _do_fixed_update.ApplyIdol();
             }).AddTo(this);
 
@@ -121,7 +121,7 @@ namespace Studio.MeowToon {
             /// walk.
             /// </summary>
             this.UpdateAsObservable().Where(predicate: _ => _do_update.grounded && _up_button.isPressed && !_y_button.isPressed).Subscribe(onNext: _ => {
-                /*_simpleAnime.Play("Walk");*/
+                _simple_anime.Play("Walk");
                 _do_fixed_update.ApplyWalk();
             }).AddTo(this);
 
@@ -135,7 +135,7 @@ namespace Studio.MeowToon {
             /// run.
             /// </summary>
             this.UpdateAsObservable().Where(predicate: _ => _do_update.grounded && _up_button.isPressed && _y_button.isPressed).Subscribe(onNext: _ => {
-                /*_simpleAnime.Play("Run");*/
+                _simple_anime.Play("Run");
                 _do_fixed_update.ApplyRun();
             }).AddTo(this);
 
@@ -149,7 +149,7 @@ namespace Studio.MeowToon {
             /// backward.
             /// </summary>
             this.UpdateAsObservable().Where(predicate: _ => _do_update.grounded && _down_button.isPressed).Subscribe(onNext: _ => {
-                /*_simpleAnime.Play("Walk");*/
+                _simple_anime.Play("Walk");
                 _do_fixed_update.ApplyBackward();
             }).AddTo(this);
 
@@ -164,7 +164,7 @@ namespace Studio.MeowToon {
             /// </summary>
             this.UpdateAsObservable().Where(predicate: _ => _b_button.wasPressedThisFrame && _do_update.grounded).Subscribe(onNext: _ => {
                 _do_update.grounded = false;
-                //_simpleAnime.Play("Jump");
+                _simple_anime.Play("Jump");
                 _do_fixed_update.ApplyJump();
             }).AddTo(this);
 

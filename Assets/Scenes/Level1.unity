@@ -483,6 +483,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8438108972577560682, guid: e0aae71f8c2521f42b5693f2d3889795, type: 3}
+      propertyPath: m_Clip
+      value: 
+      objectReference: {fileID: -4442797270934537653, guid: e126326fa6c15a546be70226fa7e9305, type: 3}
+    - target: {fileID: -8438108972577560682, guid: e0aae71f8c2521f42b5693f2d3889795, type: 3}
+      propertyPath: m_States.Array.data[0].clip
+      value: 
+      objectReference: {fileID: -4442797270934537653, guid: e126326fa6c15a546be70226fa7e9305, type: 3}
+    - target: {fileID: -4131121968321710750, guid: e0aae71f8c2521f42b5693f2d3889795, type: 3}
+      propertyPath: _simple_anime
+      value: 
+      objectReference: {fileID: 1172703996}
     - target: {fileID: 176163747930074088, guid: e0aae71f8c2521f42b5693f2d3889795, type: 3}
       propertyPath: m_Name
       value: Orange
@@ -538,6 +550,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 664856343065932114, guid: e0aae71f8c2521f42b5693f2d3889795, type: 3}
   m_PrefabInstance: {fileID: 1172703991}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1172703996 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -8438108972577560682, guid: e0aae71f8c2521f42b5693f2d3889795, type: 3}
+  m_PrefabInstance: {fileID: 1172703991}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3759e2aae0f7b9a47bb98fc64bf3c543, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1537993063
 GameObject:
   m_ObjectHideFlags: 0
