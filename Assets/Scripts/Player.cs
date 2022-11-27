@@ -33,15 +33,15 @@ namespace Studio.MeowToon {
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // References [bool => is+adjective, has+past participle, can+verb prototype, triad verb]
 
-        [SerializeField] float _jump_power = 15.0f;
+        [SerializeField] float _jump_power = 10.0f;
 
         [SerializeField] float _rotational_speed = 10.0f;
 
-        [SerializeField] float _forward_speed_limit = 1.1f;
+        [SerializeField] float _forward_speed_limit = 1.5f;
 
         [SerializeField] float _run_speed_limit = 3.25f;
 
-        [SerializeField] float _backward_speed_limit = 0.75f;
+        [SerializeField] float _backward_speed_limit = 1.0f;
 
         [SerializeField] SimpleAnimation _simple_anime;
 
@@ -120,8 +120,8 @@ namespace Studio.MeowToon {
             /// <summary>
             /// walk.
             /// </summary>
-            this.UpdateAsObservable().Where(predicate: _ => _do_update.grounded && _up_button.isPressed && !_y_button.isPressed).Subscribe(onNext: _ => {
-                _simple_anime.Play("Walk");
+            this.UpdateAsObservable().Where(predicate: _ => _up_button.isPressed && !_y_button.isPressed).Subscribe(onNext: _ => {
+                if (_do_update.grounded) { _simple_anime.Play("Walk"); }
                 _do_fixed_update.ApplyWalk();
             }).AddTo(this);
 
@@ -134,8 +134,8 @@ namespace Studio.MeowToon {
             /// <summary>
             /// run.
             /// </summary>
-            this.UpdateAsObservable().Where(predicate: _ => _do_update.grounded && _up_button.isPressed && _y_button.isPressed).Subscribe(onNext: _ => {
-                _simple_anime.Play("Run");
+            this.UpdateAsObservable().Where(predicate: _ => _up_button.isPressed && _y_button.isPressed).Subscribe(onNext: _ => {
+                if (_do_update.grounded) { _simple_anime.Play("Run"); }
                 _do_fixed_update.ApplyRun();
             }).AddTo(this);
 
