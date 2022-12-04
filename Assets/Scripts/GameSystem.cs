@@ -29,11 +29,74 @@ namespace Studio.MeowToon {
 #nullable enable
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
+        // Properties [noun, adjectives] 
+
+        /// <summary>
+        /// game mode.
+        /// </summary>
+        public string mode { get => Status.mode; set => Status.mode = value; }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        // public Events [verb, verb phrase]
+
+        public event Action? OnPauseOn;
+
+        public event Action? OnPauseOff;
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        // public Methods [verb]
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
         // update Methods
 
         // Awake is called when the script instance is being loaded.
         void Awake() {
             Application.targetFrameRate = FPS;
+
+            if (HasLevel()) {
+                // get level.
+                Level level = Find(name: LEVEL_TYPE).Get<Level>();
+
+                /// <summary>
+                /// level pause on.
+                /// </summary>
+                level.OnPauseOn += () => { OnPauseOn?.Invoke(); };
+
+                /// <summary>
+                /// level pause off.
+                /// </summary>
+                level.OnPauseOff += () => { OnPauseOff?.Invoke(); };
+            }
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        // inner Classes
+
+        #region Status
+
+        static class Status {
+#nullable enable
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+            // static Fields [nouns, noun phrases]
+
+            static string _mode;
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+            // static Constructor
+
+            static Status() {
+                _mode = MODE_NORMAL;
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+            // public static Properties [noun, noun phrase, adjective]
+
+            public static string mode {
+                get => _mode; set => _mode = value;
+            }
+        }
+
+        #endregion
     }
 }

@@ -26,29 +26,29 @@ namespace Studio.MeowToon {
 
         public const int FPS = 24; // 24fps
 
-        //public const string SCENE_TITLE = "Title";
-        //public const string SCENE_SELECT = "Select";
-        //public const string SCENE_LEVEL_1 = "Level1";
-        //public const string SCENE_LEVEL_2 = "Level2";
-        //public const string SCENE_LEVEL_3 = "Level3";
-        //public const string SCENE_ENDING = "Ending";
+        public const string SCENE_TITLE = "Title";
+        public const string SCENE_SELECT = "Select";
+        public const string SCENE_LEVEL_1 = "Level1";
+        public const string SCENE_LEVEL_2 = "Level2";
+        public const string SCENE_LEVEL_3 = "Level3";
+        public const string SCENE_ENDING = "Ending";
 
-        //public const string MODE_EASY = "easy";
-        //public const string MODE_NORMAL = "normal";
-        //public const string MODE_HARD = "hard";
+        public const string MODE_EASY = "easy";
+        public const string MODE_NORMAL = "normal";
+        public const string MODE_HARD = "hard";
 
-        //public const string CAMERA_SYSTEM = "CameraSystem";
-        //public const string GAME_SYSTEM = "GameSystem";
-        //public const string NOTICE_SYSTEM = "NoticeSystem";
+        public const string CAMERA_SYSTEM = "CameraSystem";
+        public const string GAME_SYSTEM = "GameSystem";
+        public const string NOTICE_SYSTEM = "NoticeSystem";
 
         public const string BLOCK_TYPE = "Block";
         public const string GROUND_TYPE = "Ground";
         public const string WALL_TYPE = "Wall";
         //public const string BALLOON_TYPE = "Balloon";
         //public const string COIN_TYPE = "Coin";
-        //public const string Player_TYPE = "Player";
-        //public const string HOME_TYPE = "Home";
-        //public const string LEVEL_TYPE = "Level";
+        public const string Player_TYPE = "Orange";
+        public const string HOME_TYPE = "Home";
+        public const string LEVEL_TYPE = "Level";
 
         //public const string MESSAGE_LEVEL_START = "Get items!";
         //public const string MESSAGE_LEVEL_CLEAR = "Level Clear!";

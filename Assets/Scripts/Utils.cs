@@ -97,24 +97,24 @@ namespace Studio.MeowToon {
         /// <summary>
         /// has level.
         /// </summary>
-        //public static bool HasLevel() {
-        //    GameObject game_object = Find(name: LEVEL_TYPE);
-        //    if (game_object is not null) {
-        //        return true;
-        //    }
-        //    return false;
-        //}
+        public static bool HasLevel() {
+            GameObject game_object = Find(name: LEVEL_TYPE);
+            if (game_object is not null) {
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>
-        /// has vehicle.
+        /// has player.
         /// </summary>
-        //public static bool HasVehicle() {
-        //    GameObject game_object = Find(name: VEHICLE_TYPE);
-        //    if (game_object is not null) {
-        //        return true;
-        //    }
-        //    return false;
-        //}
+        public static bool HasPlayer() {
+            GameObject game_object = Find(name: Player_TYPE);
+            if (game_object is not null) {
+                return true;
+            }
+            return false;
+        }
 
         #endregion
 
