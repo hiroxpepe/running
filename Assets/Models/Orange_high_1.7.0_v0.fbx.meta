@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2d1f62390cddaa4498918173c8f0bf39
+guid: ee042549941408346841c65cad90f2a6
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -232,6 +232,14 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
+    - boneName: Hair
+      humanName: LeftEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
     - boneName: UpperChest
       humanName: UpperChest
       limit:
@@ -257,13 +265,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Orange_high_1.6.10_v0(Clone)
+    - name: Orange_high_1.7.0_v0(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Orange
-      parentName: Orange_high_1.6.10_v0(Clone)
+      parentName: Orange_high_1.7.0_v0(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -429,12 +437,12 @@ ModelImporter:
       scale: {x: 1.0000031, y: 0.9999999, z: 0.99999994}
     - name: RightLowerLeg
       parentName: RightUpperLeg
-      position: {x: 0.016811306, y: 0.09332731, z: 0.00015256213}
+      position: {x: 0.016811306, y: 0.09332731, z: 0.00015256215}
       rotation: {x: 0.0012411155, y: 0.9999875, z: -0.000049359656, w: 0.0048440685}
       scale: {x: 0.9999998, y: 1.0000005, z: 0.9999999}
     - name: RightFoot
       parentName: RightLowerLeg
-      position: {x: -0.0054125595, y: 0.11317578, z: -0.0000000042686934}
+      position: {x: -0.0054125595, y: 0.11317578, z: -0.000000004276929}
       rotation: {x: -0.617032, y: 0.000000029649616, z: 0.000000048430568, w: 0.7869381}
       scale: {x: 1, y: 1, z: 1}
     - name: RightToeBase
@@ -459,17 +467,17 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: TailCenter
       parentName: TailBase
-      position: {x: 1.08145454e-11, y: 0.07236389, z: 0.00000001538545}
+      position: {x: 1.0805451e-11, y: 0.07236389, z: 0.00000001538545}
       rotation: {x: -0.0032444966, y: 0.0004862049, z: 0.0010775229, w: 0.99999404}
       scale: {x: 1, y: 0.9999999, z: 1}
     - name: TailMid
       parentName: TailCenter
-      position: {x: 0.00016512093, y: 0.07657975, z: 0.00016071062}
+      position: {x: 0.00016512097, y: 0.07657975, z: 0.00016071062}
       rotation: {x: 0.011743091, y: -0.0004953387, z: -0.0010733628, w: 0.9999304}
       scale: {x: 1, y: 0.9999999, z: 0.9999999}
     - name: TailTop
       parentName: TailMid
-      position: {x: 1.8189894e-14, y: 0.07415406, z: 0.000000020861664}
+      position: {x: 2.6175256e-11, y: 0.07415406, z: 0.000000020861664}
       rotation: {x: -2.0816682e-17, y: -2.556133e-11, z: -6.1154415e-12, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: TailTop_end
@@ -478,42 +486,42 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: orng_Neck
-      parentName: Orange_high_1.6.10_v0(Clone)
+      parentName: Orange_high_1.7.0_v0(Clone)
       position: {x: -0, y: -0.000000005066505, z: 0.000000010132895}
       rotation: {x: 0.00000008099468, y: -1.4210854e-14, z: -1.110223e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: orng_Head
-      parentName: Orange_high_1.6.10_v0(Clone)
+      parentName: Orange_high_1.7.0_v0(Clone)
       position: {x: -0, y: -0.000000005066505, z: 0.000000010132895}
       rotation: {x: 0.00000008099468, y: -1.4210854e-14, z: -1.110223e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: orng_Hand
-      parentName: Orange_high_1.6.10_v0(Clone)
+      parentName: Orange_high_1.7.0_v0(Clone)
       position: {x: -0, y: -0.000000005066505, z: 0.000000010132895}
       rotation: {x: 0.00000008099468, y: -1.4210854e-14, z: -1.110223e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: orng_Whisker
-      parentName: Orange_high_1.6.10_v0(Clone)
-      position: {x: -0, y: -0.000000005066505, z: 0.000000010132895}
-      rotation: {x: 0.00000008099468, y: -1.4210854e-14, z: -1.110223e-16, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: orng_Bell
-      parentName: Orange_high_1.6.10_v0(Clone)
-      position: {x: -0, y: -0.000000005066505, z: 0.000000010132895}
-      rotation: {x: 0.00000008099468, y: -1.4210854e-14, z: -1.110223e-16, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: orng_Ear
-      parentName: Orange_high_1.6.10_v0(Clone)
+      parentName: Orange_high_1.7.0_v0(Clone)
       position: {x: -0, y: -0.000000005066505, z: 0.000000010132895}
       rotation: {x: 0.00000008099468, y: -1.4210854e-14, z: -1.110223e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: orng_Body
-      parentName: Orange_high_1.6.10_v0(Clone)
+      parentName: Orange_high_1.7.0_v0(Clone)
+      position: {x: -0, y: -0.000000005066505, z: 0.000000010132895}
+      rotation: {x: 0.00000008099468, y: -1.4210854e-14, z: -1.110223e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: orng_Ear
+      parentName: Orange_high_1.7.0_v0(Clone)
       position: {x: -0, y: -0.000000005066505, z: 0.000000010132895}
       rotation: {x: 0.00000008099468, y: -1.4210854e-14, z: -1.110223e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: orng_Tail
-      parentName: Orange_high_1.6.10_v0(Clone)
+      parentName: Orange_high_1.7.0_v0(Clone)
+      position: {x: -0, y: -0.000000005066505, z: 0.000000010132895}
+      rotation: {x: 0.00000008099468, y: -1.4210854e-14, z: -1.110223e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: orng_Bell
+      parentName: Orange_high_1.7.0_v0(Clone)
       position: {x: -0, y: -0.000000005066505, z: 0.000000010132895}
       rotation: {x: 0.00000008099468, y: -1.4210854e-14, z: -1.110223e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
