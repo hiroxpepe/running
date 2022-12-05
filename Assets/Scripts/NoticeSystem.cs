@@ -17,9 +17,11 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.GameObject;
+using UniRx;
+using UniRx.Triggers;
 
-//using static Studio.MeowToon.Env;
-//using static Studio.MeowToon.Utils;
+using static Studio.MeowToon.Env;
+using static Studio.MeowToon.Utils;
 
 namespace Studio.MeowToon {
     /// <summary>
@@ -32,30 +34,51 @@ namespace Studio.MeowToon {
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // References [bool => is+adjective, has+past participle, can+verb prototype, triad verb]
 
-        [SerializeField] Text _message_text, _targets_text, _points_text, _air_speed_text, _vertical_speed_text;
- 
-        [SerializeField] Text _altitude_text, _heading_text, _pitch_text, _roll_text, _lift_spoiler_text, _mode_text;
+        [SerializeField] Text _message_text, _targets_text, _points_text, _mode_text;
 
         /// <remarks>
         /// for development.
         /// </remarks>
-        [SerializeField] Text _energy_text, _power_text, _flight_text;
+        [SerializeField] Text _energy_text, _power_text;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // Fields [noun, adjectives] 
 
-        //GameSystem _game_system;
+        GameSystem _game_system;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // update Methods
 
         // Awake is called when the script instance is being loaded.
         void Awake() {
-            //_game_system = Find(name: GAME_SYSTEM).Get<GameSystem>();
+            _game_system = Find(name: GAME_SYSTEM).Get<GameSystem>();
+
+            /// <summary>
+            /// game system pause on.
+            /// </summary>
+            _game_system.OnPauseOn += () => { _message_text.text = MESSAGE_GAME_PAUSE; };
+
+            /// <summary>
+            /// game system pause off.
+            /// </summary>
+            _game_system.OnPauseOff += () => { _message_text.text = string.Empty; };
+
+            // get home.
+            Home home = Find(name: HOME_TYPE).Get<Home>();
+
+            /// <summary>
+            /// came back home.
+            /// </summary>
+            home.OnCameBack += () => { _message_text.text = MESSAGE_LEVEL_CLEAR; };
         }
 
         // Start is called before the first frame update
         void Start() {
+            // update text ui.
+            this.UpdateAsObservable().Subscribe(onNext: _ => {
+                updateGameStatus();
+                updateVehicleStatus();
+            }).AddTo(this);
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,6 +88,14 @@ namespace Studio.MeowToon {
         /// update game status
         /// </summary>
         void updateGameStatus() {
+            //_targets_text.text = string.Format("TGT {0}/{1}", _game_system.targetTotal - _game_system.targetRemain, _game_system.targetTotal);
+            //_points_text.text = string.Format("POINT {0}", _game_system.pointTotal);
+            _mode_text.text = string.Format("Mode: {0}", _game_system.mode);
+            switch (_game_system.mode) {
+                case MODE_EASY: _mode_text.color = yellow; break;
+                case MODE_NORMAL: _mode_text.color = green; break;
+                case MODE_HARD: _mode_text.color = purple; break;
+            }
         }
 
         /// <summary>
