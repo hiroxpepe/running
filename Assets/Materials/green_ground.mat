@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ground_green
+  m_Name: green_ground
   m_Shader: {fileID: 4800000, guid: e0edbf68d81d1f340ae8b110086b7063, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -39,11 +39,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 10, y: 10}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 24e66c768beb9224aa77beb98ed17444, type: 3}
-        m_Scale: {x: 10, y: 10}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatcapTex:
         m_Texture: {fileID: 0}
@@ -86,7 +86,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadeTexture:
-        m_Texture: {fileID: 2800000, guid: 24e66c768beb9224aa77beb98ed17444, type: 3}
+        m_Texture: {fileID: 2800000, guid: d9c1df6dd246f0849bcd1f0c142cbe26, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadingGradeTexture:
@@ -142,14 +142,14 @@ Material:
     - _OutlineCullMode: 1
     - _OutlineLightingMix: 1
     - _OutlineScaledMaxDistance: 1
-    - _OutlineWidth: 0
+    - _OutlineWidth: 0.5
     - _OutlineWidthMode: 0
     - _Parallax: 0.02
     - _ReceiveShadowRate: 1
     - _RenderQueueOffset: 0
-    - _RimFresnelPower: 5
+    - _RimFresnelPower: 1
     - _RimLift: 0
-    - _RimLightingMix: 1
+    - _RimLightingMix: 0
     - _ShadeShift: 0
     - _ShadeToony: 0.9
     - _ShadingGradeRate: 1
@@ -174,5 +174,5 @@ Material:
     - _MatcapColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ShadeColor: {r: 0.34901962, g: 0.5294118, b: 0.3921569, a: 1}
+    - _ShadeColor: {r: 0.34901962, g: 0.5294118, b: 0.39215687, a: 1}
   m_BuildTextureStacks: []
