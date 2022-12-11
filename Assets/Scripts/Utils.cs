@@ -185,7 +185,7 @@ namespace Studio.MeowToon {
             if (isAndroid()) {
                 vibrator.Call(methodName: "vibrate", args: milliseconds);
             } else {
-                Handheld.Vibrate();
+                //Handheld.Vibrate();
             }
         }
 

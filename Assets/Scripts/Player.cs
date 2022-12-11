@@ -186,20 +186,6 @@ namespace Studio.MeowToon {
             }).AddTo(this);
 
             /// <summary>
-            /// freeze.
-            /// </summary>
-            this.OnCollisionStayAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE) && (_up_button.isPressed || _down_button.isPressed) && _acceleration.freeze).Subscribe(onNext: _ => {
-                double reach = getReach();
-                if (_do_update.grounded && (reach < 0.5d || reach >= 0.99d)) {
-                    moveLetfOrRight(direction: getDirection(forward_vector: transform.forward));
-                }
-                else if (reach >= 0.5d && reach < 0.99d) {
-                    rb.useGravity = false;
-                    moveTop();
-                }
-            }).AddTo(this);
-
-            /// <summary>
             /// when touching blocks.
             /// TODO: to Block ?
             /// </summary>
@@ -232,7 +218,6 @@ namespace Studio.MeowToon {
             this.OnCollisionEnterAsObservable().Where(predicate: x => x.Like(GROUND_TYPE)).Subscribe(onNext: x => {
                 _do_update.grounded = true;
                 if (isUpOrDown()) {
-                    Debug.Log("OnCollisionEnter: GROUND_TYPE");
                     rb.useGravity = true;
                     rb.velocity = new Vector3(0f, 0f, 0f);
 
@@ -242,6 +227,27 @@ namespace Studio.MeowToon {
                     transform.eulerAngles = angle;
 
                     OnGrounded?.Invoke(); // call event handler.
+                }
+            }).AddTo(this);
+
+            /// <summary>
+            /// freeze.
+            /// </summary>
+            this.OnCollisionStayAsObservable().Where(predicate: x => (x.Like(GROUND_TYPE) || x.Like(BLOCK_TYPE)) && (_up_button.isPressed || _down_button.isPressed) && _acceleration.freeze).Subscribe(onNext: x => {
+                if (!isHitSide(target: x.gameObject)) { return; }
+                double reach = getReach(target: x.gameObject);
+                if (_do_update.grounded && (reach < 0.5d || reach >= 0.99d)) {
+                    moveLetfOrRight(direction: getDirection(forward_vector: transform.forward));
+                }
+                else if (reach >= 0.5d && reach < 0.99d) {
+                    Debug.Log("freeze to moveTop()");
+                    Debug.Log($"reach: {reach}");
+                    rb.useGravity = false;
+                    moveTop();
+                    rb.useGravity = true;
+                }
+                else {
+                    dropDown();
                 }
             }).AddTo(this);
         }
@@ -288,18 +294,35 @@ namespace Studio.MeowToon {
         /// <summary>
         /// the value until the top of the block.
         /// </summary>
-        double getReach() {
-            return Round(value: transform.position.y, digits: 2) % 1; // FIXME:
+        double getReach(GameObject target) {
+            float distance_y = transform.position.y - target.transform.position.y;
+            float size_to_one = 1.0f / target.Get<Renderer>().bounds.size.y;
+            float rate_for_one = distance_y * size_to_one;
+            return Round(value: rate_for_one, digits: 2);
         }
 
         /// <summary>
-        /// move top when the vehicle hits a block.
+        /// move top when the player hits a block.
         /// </summary>
         void moveTop() {
-            const float MOVE_VALUE = 12.0f;// 6.0f;
+            const float MOVE_VALUE = 12.0f;
+            Debug.Log($"moveTop !");
             transform.position = new(
                 x: transform.position.x,
                 y: transform.position.y + MOVE_VALUE * Time.deltaTime,
+                z: transform.position.z
+            );
+        }
+
+        /// <summary>
+        /// drop down when the player hits a block.
+        /// </summary>
+        void dropDown() {
+            const float MOVE_VALUE = 6.0f;
+            Debug.Log($"dropDown !");
+            transform.position = new(
+                x: transform.position.x,
+                y: transform.position.y - MOVE_VALUE * Time.deltaTime,
                 z: transform.position.z
             );
         }
