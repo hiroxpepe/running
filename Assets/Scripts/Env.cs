@@ -24,7 +24,7 @@ namespace Studio.MeowToon {
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // Constants
 
-        public const int FPS = 24; // 24fps
+        public const int FPS = 60; // 30fps
 
         public const string SCENE_TITLE = "Title";
         public const string SCENE_SELECT = "Select";

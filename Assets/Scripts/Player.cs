@@ -54,6 +54,8 @@ namespace Studio.MeowToon {
 
         Acceleration _acceleration;
 
+        Vector3[] previousPosition = new Vector3[60]; // saves position 30 frames ago.
+
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // Properties [noun, adjectives]
 
@@ -205,6 +207,7 @@ namespace Studio.MeowToon {
                 if (!isHitSide(target: x.gameObject)) {
                     _do_update.grounded = true;
                     rb.useGravity = true;
+                    rb.velocity = new Vector3(0f, 0f, 0f);
                 }
             }).AddTo(this);
 
@@ -220,6 +223,7 @@ namespace Studio.MeowToon {
             this.LateUpdateAsObservable().Subscribe(onNext: _ => {
                 position = transform.position;
                 rotation = transform.rotation;
+                cashPreviousPosition();
             }).AddTo(this);
 
             /// <summary>
@@ -227,19 +231,59 @@ namespace Studio.MeowToon {
             /// </summary>
             this.OnCollisionEnterAsObservable().Where(predicate: x => x.Like(GROUND_TYPE)).Subscribe(onNext: x => {
                 _do_update.grounded = true;
-                rb.useGravity = true;
+                if (isUpOrDown()) {
+                    Debug.Log("OnCollisionEnter: GROUND_TYPE");
+                    rb.useGravity = true;
+                    rb.velocity = new Vector3(0f, 0f, 0f);
 
-                // reset rotate.
-                Vector3 angle = transform.eulerAngles;
-                angle.x = angle.z = 0f;
-                transform.eulerAngles = angle;
+                    // reset rotate.
+                    Vector3 angle = transform.eulerAngles;
+                    angle.x = angle.z = 0f;
+                    transform.eulerAngles = angle;
 
-                OnGrounded?.Invoke(); // call event handler.
+                    OnGrounded?.Invoke(); // call event handler.
+                }
             }).AddTo(this);
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // private Methods [verb]
+
+        /// <summary>
+        /// saves position value for the previous n frame.
+        /// </summary>
+        void cashPreviousPosition() {
+            for (int i = previousPosition.Length - 1 ; i > -1; i--) {
+                if (i > 0) {
+                    previousPosition[i] = previousPosition[i - 1];
+                } else if (i == 0) {
+                    previousPosition[i] = new Vector3(
+                        (float) Math.Round(transform.position.x, 3),
+                        (float) Math.Round(transform.position.y, 3),
+                        (float) Math.Round(transform.position.z, 3)
+                    );
+                }
+            }
+        }
+
+        /// <summary>
+        /// whether there was an up or down movement.
+        /// </summary>
+        bool isUpOrDown() {
+            int fps = Application.targetFrameRate;
+            int ADJUST_VALUE = 9;
+            if (fps == 60) ADJUST_VALUE = 9;
+            if (fps == 30) ADJUST_VALUE = 20;
+            float current_y = (float) Math.Round(transform.position.y, 1, MidpointRounding.AwayFromZero);
+            float previous_y = (float) Math.Round(previousPosition[ADJUST_VALUE].y, 1, MidpointRounding.AwayFromZero);
+            if (current_y == previous_y) {
+                return false;
+            } else if (current_y != previous_y) {
+                return true;
+            } else {
+                return true;
+            }
+        }
 
         /// <summary>
         /// the value until the top of the block.
@@ -252,7 +296,7 @@ namespace Studio.MeowToon {
         /// move top when the vehicle hits a block.
         /// </summary>
         void moveTop() {
-            const float MOVE_VALUE = 6.0f;
+            const float MOVE_VALUE = 12.0f;// 6.0f;
             transform.position = new(
                 x: transform.position.x,
                 y: transform.position.y + MOVE_VALUE * Time.deltaTime,
