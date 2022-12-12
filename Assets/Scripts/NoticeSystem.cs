@@ -39,12 +39,16 @@ namespace Studio.MeowToon {
         /// <remarks>
         /// for development.
         /// </remarks>
-        [SerializeField] Text _energy_text, _power_text;
+        [SerializeField] Text _energy_text, _power_text, _fps_text;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // Fields [noun, adjectives] 
 
         GameSystem _game_system;
+
+        int _frame_count;
+
+        float _elapsed_time;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // update Methods
@@ -78,6 +82,7 @@ namespace Studio.MeowToon {
             this.UpdateAsObservable().Subscribe(onNext: _ => {
                 updateGameStatus();
                 updateVehicleStatus();
+                updateFpsStatus();
             }).AddTo(this);
         }
 
@@ -102,6 +107,21 @@ namespace Studio.MeowToon {
         /// update vehicle status
         /// </summary>
         void updateVehicleStatus() {
+        }
+
+        /// <summary>
+        /// update fps status
+        /// </summary>
+        void updateFpsStatus() {
+            _frame_count++;
+            _elapsed_time += Time.deltaTime;
+            if (_elapsed_time >= 1.0f) {
+                float fps = 1.0f * _frame_count / _elapsed_time;
+                string fps_rate = $"FPS {fps.ToString(format: "F2")}";
+                _fps_text.text = fps_rate;
+                _frame_count = 0;
+                _elapsed_time = 0f;
+            }
         }
     }
 }
