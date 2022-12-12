@@ -75,6 +75,8 @@ namespace Studio.MeowToon {
 
         public event Action? OnGrounded;
 
+        public event Action? OnFellDown;
+
         /// <summary>
         /// changed event handler.
         /// </summary>
@@ -208,6 +210,9 @@ namespace Studio.MeowToon {
             // LateUpdate is called after all Update functions have been called.
             this.LateUpdateAsObservable().Subscribe(onNext: _ => {
                 position = transform.position;
+                //if (position.y < -10f) {
+                //    OnFellDown?.Invoke();
+                //}
                 rotation = transform.rotation;
                 cashPreviousPosition();
             }).AddTo(this);

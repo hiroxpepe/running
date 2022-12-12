@@ -63,6 +63,17 @@ namespace Studio.MeowToon {
                 _is_home = true;
                 Time.timeScale = 0f;
             };
+
+            // get player.
+            Player player = Find(name: Player_TYPE).Get<Player>();
+
+            /// <summary>
+            /// player on fell down.
+            /// spend points.
+            /// </summary>
+            //player.OnFellDown += () => {
+            //    SceneManager.LoadScene(sceneName: SCENE_LEVEL_1);
+            //};
         }
 
         // Start is called before the first frame update
