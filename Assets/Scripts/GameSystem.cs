@@ -51,7 +51,7 @@ namespace Studio.MeowToon {
 
         // Awake is called when the script instance is being loaded.
         void Awake() {
-            Application.targetFrameRate = FPS;
+            //Application.targetFrameRate = FPS;
 
             if (HasLevel()) {
                 // get level.
