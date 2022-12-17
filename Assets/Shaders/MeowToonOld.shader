@@ -1,4 +1,4 @@
-Shader "MeowToon"
+Shader "MeowToon/Old"
 {
 	Properties
 	{
