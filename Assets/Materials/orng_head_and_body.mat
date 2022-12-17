@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: orng_head_and_body
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 53d36eaed664f64418449aa5b4c5e5fa, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -42,6 +42,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: ce7fd840df8e1af41a1bf3ec3a49fdf7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTexture:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatcapTex:
@@ -96,6 +100,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ShadowTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SphereAdd:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -141,7 +153,7 @@ Material:
     - _OutlineCullMode: 1
     - _OutlineLightingMix: 1
     - _OutlineScaledMaxDistance: 1
-    - _OutlineWidth: 0.5
+    - _OutlineWidth: 0.005
     - _OutlineWidthMode: 0
     - _Parallax: 0.02
     - _ReceiveShadowRate: 1
@@ -155,12 +167,14 @@ Material:
     - _ShadingShiftFactor: -0.05
     - _ShadingShiftTexScale: 1
     - _ShadingToonyFactor: 0.95
+    - _ShadowStrength: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Strength: 0.5
+    - _Strength: 0.2
     - _TransparentWithZWrite: 0
     - _UVSec: 0
+    - _UseVertexExpansion: 0
     - _UvAnimRotation: 0
     - _UvAnimRotationSpeed: 0
     - _UvAnimScrollX: 0

@@ -11,6 +11,7 @@ Shader "MeowToon/Texture"
     {
         Pass
         {
+            Name "TOON"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
