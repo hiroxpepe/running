@@ -9,6 +9,8 @@ Shader "MeowToon/TextureShade"
 
     SubShader
     {
+        Tags { "Queue" = "Transparent" }
+        Blend SrcAlpha OneMinusSrcAlpha 
         Pass
         {
             Name "TEXTURE_SHADE"
@@ -53,8 +55,9 @@ Shader "MeowToon/TextureShade"
                 float3 n = normalize(i.worldNormal);
                 float interpolation = step(dot(n, l), 0);
                 float4 texture_color = tex2D(_MainTex, i.uv);
-                float3 final_color = texture_color * lerp(_Color, (1 - _Strength) * _Color, interpolation);
-                return float4(final_color, 1);
+                float4 final_color = texture_color * lerp(_Color, (1 - _Strength) * _Color, interpolation);
+                final_color.a = _Color.a;
+                return final_color;
             }
             ENDCG
         }

@@ -2,12 +2,14 @@ Shader "MeowToon/Texture"
 {
     Properties
     {
-        _Color("Color", Color) = (1, 1, 1, 1)
+        _Color("Color", Color) = (1, 1, 1, 0.5)
         _MainTex ("Main Texture", 2D) = "white" {}
     }
 
     SubShader
     {
+        Tags { "Queue" = "Transparent" }
+        Blend SrcAlpha OneMinusSrcAlpha 
         Pass
         {
             Name "TEXTURE"
@@ -47,8 +49,9 @@ Shader "MeowToon/Texture"
             fixed4 frag(v2f i) : SV_Target
             {
                 float4 texture_color = tex2D(_MainTex, i.uv);
-                float3 final_color = texture_color * _Color;
-                return float4(final_color, 1);
+                float4 final_color = texture_color * _Color;
+                final_color.a = _Color.a;
+                return final_color;
             }
             ENDCG
         }

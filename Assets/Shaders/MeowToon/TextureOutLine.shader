@@ -15,7 +15,6 @@ Shader "MeowToon/TextureOutLine"
         Pass
         {
             Cull Front
-
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag

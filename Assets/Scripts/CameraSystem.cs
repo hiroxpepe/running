@@ -74,7 +74,7 @@ namespace Studio.MeowToon {
             /// </summary>
             this.OnTriggerEnterAsObservable().Where(predicate: x => x.Like(WALL_TYPE)).Subscribe(onNext: x => {
                 List<Material> material_list = x.gameObject.Get<MeshRenderer>().materials.ToList();
-                material_list.ForEach(material => { material.ToOpaque(); });
+                material_list.ForEach(material => { material.ToTransparent(); });
             }).AddTo(this);
 
             /// <summary>
@@ -82,7 +82,7 @@ namespace Studio.MeowToon {
             /// </summary>
             this.OnTriggerExitAsObservable().Where(predicate: x => x.Like(WALL_TYPE)).Subscribe(onNext: x => {
                 List<Material> material_list = x.gameObject.Get<MeshRenderer>().materials.ToList();
-                material_list.ForEach(material => { material.ToTransparent(); });
+                material_list.ForEach(material => { material.ToOpaque(); });
             }).AddTo(this);
 
             /// <summary>
@@ -90,7 +90,7 @@ namespace Studio.MeowToon {
             /// </summary>
             this.OnTriggerEnterAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE)).Subscribe(onNext: x => {
                 List<Material> material_list = x.gameObject.Get<MeshRenderer>().materials.ToList();
-                material_list.ForEach(material => { material.ToOpaque(); });
+                material_list.ForEach(material => { material.ToTransparent(); });
             }).AddTo(this);
 
             /// <summary>
@@ -98,7 +98,7 @@ namespace Studio.MeowToon {
             /// </summary>
             this.OnTriggerExitAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE)).Subscribe(onNext: x => {
                 List<Material> material_list = x.gameObject.Get<MeshRenderer>().materials.ToList();
-                material_list.ForEach(material => { material.ToTransparent(); });
+                material_list.ForEach(material => { material.ToOpaque(); });
             }).AddTo(this);
         }
 

@@ -7,6 +7,8 @@ Shader "MeowToon/Color"
 
     SubShader
     {
+        Tags { "Queue" = "Transparent" }
+        Blend SrcAlpha OneMinusSrcAlpha 
         Pass
         {
             Name "COLOR"
@@ -36,7 +38,9 @@ Shader "MeowToon/Color"
 
             fixed4 frag(v2f i) : SV_Target
             {
-                return _Color;
+                float4 final_color = _Color;
+                final_color.a = _Color.a;
+                return final_color;
             }
             ENDCG
         }

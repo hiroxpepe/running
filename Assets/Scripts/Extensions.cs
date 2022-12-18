@@ -102,7 +102,7 @@ namespace Studio.MeowToon {
         /// </summary>
         public static Material ToOpaque(this Material self, float time = 0) {
             Color color = self.color;
-            color.a = 0; // to opaque.
+            color.a = 1.0f; // to opaque.
             self.color = color;
             return self;
         }
@@ -112,7 +112,7 @@ namespace Studio.MeowToon {
         /// </summary>
         public static Material ToTransparent(this Material self, float time = 0) {
             Color color = self.color;
-            color.a = 1; // to transparent.
+            color.a = 0.5f; // to transparent.
             self.color = color;
             return self;
         }
