@@ -32,7 +32,7 @@ namespace Studio.MeowToon {
             ///////////////////////////////////////////////////////////////////////////////////////
             // Fields [noun, adjectives] 
 
-            bool _grounded, _banking;
+            bool _grounded, _banking, _safe_walking;
 
             ///////////////////////////////////////////////////////////////////////////////////////
             // Properties [noun, adjectives] 
@@ -40,6 +40,8 @@ namespace Studio.MeowToon {
             public bool grounded { get => _grounded; set => _grounded = value; }
 
             public bool banking { get => _banking; set => _banking = value; }
+
+            public bool safeWalking { get => _safe_walking; set => _safe_walking = value; }
 
             ///////////////////////////////////////////////////////////////////////////////////////
             // Constructor

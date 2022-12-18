@@ -124,7 +124,7 @@ namespace Studio.MeowToon {
             /// <summary>
             /// walk.
             /// </summary>
-            this.UpdateAsObservable().Where(predicate: _ => _up_button.isPressed && !_y_button.isPressed).Subscribe(onNext: _ => {
+            this.UpdateAsObservable().Where(predicate: _ => _up_button.isPressed && !_y_button.isPressed && !_do_update.safeWalking).Subscribe(onNext: _ => {
                 if (_do_update.grounded) { _simple_anime.Play("Walk"); }
                 _do_fixed_update.ApplyWalk();
             }).AddTo(this);
@@ -206,6 +206,24 @@ namespace Studio.MeowToon {
             this.OnCollisionExitAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE)).Subscribe(onNext: x => {
                 rb.useGravity = true;
             }).AddTo(this);
+
+            /// <summary>
+            /// safe walking.
+            /// </summary>
+            //this.OnCollisionExitAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE) && !_y_button.isPressed).Subscribe(onNext: x => {
+            //    Debug.Log($"safe walking");
+            //    _do_fixed_update.CancelWalk();
+            //    _do_update.safeWalking = true;
+            //    transform.position = previousPosition[12]; // FIXME:
+            //}).AddTo(this);
+
+            //this.UpdateAsObservable().Where(predicate: _ => _up_button.wasReleasedThisFrame).Subscribe(onNext: _ => {
+            //    _do_update.safeWalking = false;
+            //}).AddTo(this);
+
+            //this.UpdateAsObservable().Where(predicate: _ => _b_button.wasReleasedThisFrame && _do_update.grounded).Subscribe(onNext: _ => {
+            //    rb.velocity = new Vector3(0f, 0f, 0f);
+            //}).AddTo(this);
 
             // LateUpdate is called after all Update functions have been called.
             this.LateUpdateAsObservable().Subscribe(onNext: _ => {
