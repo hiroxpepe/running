@@ -12,6 +12,8 @@ Shader "MeowToon/ColorShadeOutLine"
     SubShader
     {
         UsePass "MeowToon/ColorShade/COLOR_SHADE"
+        Tags { "Queue" = "Transparent" }
+        Blend SrcAlpha OneMinusSrcAlpha
         Pass
         {
             Cull Front
@@ -57,9 +59,13 @@ Shader "MeowToon/ColorShadeOutLine"
                 return o;
             }
 
+            float4 _Color;
+
             fixed4 frag(v2f i) : SV_Target
             {
-                return _OutlineColor;
+                float4 final_color = _OutlineColor;
+                final_color.a = _Color.a;
+                return final_color;
             }
             ENDCG
         }

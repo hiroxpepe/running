@@ -25,7 +25,7 @@ Shader "MeowToon/TextureShade"
             {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
-				float4 uv : TEXCOORD0;
+                float4 uv : TEXCOORD0;
             };
 
             struct v2f
@@ -35,8 +35,8 @@ Shader "MeowToon/TextureShade"
                 float2 uv : TEXCOORD0;
             };
 
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
 
             v2f vert(appdata v)
             {

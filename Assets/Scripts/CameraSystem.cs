@@ -86,6 +86,22 @@ namespace Studio.MeowToon {
             }).AddTo(this);
 
             /// <summary>
+            /// when touching the ground.
+            /// </summary>
+            this.OnTriggerEnterAsObservable().Where(predicate: x => x.Like(GROUND_TYPE)).Subscribe(onNext: x => {
+                List<Material> material_list = x.gameObject.Get<MeshRenderer>().materials.ToList();
+                material_list.ForEach(material => { material.ToTransparent(); });
+            }).AddTo(this);
+
+            /// <summary>
+            /// when leaving the ground.
+            /// </summary>
+            this.OnTriggerExitAsObservable().Where(predicate: x => x.Like(GROUND_TYPE)).Subscribe(onNext: x => {
+                List<Material> material_list = x.gameObject.Get<MeshRenderer>().materials.ToList();
+                material_list.ForEach(material => { material.ToOpaque(); });
+            }).AddTo(this);
+
+            /// <summary>
             /// when touching the block.
             /// </summary>
             this.OnTriggerEnterAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE)).Subscribe(onNext: x => {
