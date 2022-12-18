@@ -1,17 +1,16 @@
-Shader "MeowToon/Texture"
+Shader "MeowToon/ColorShade"
 {
     Properties
     {
         _Color("Color", Color) = (1, 1, 1, 1)
-        _MainTex ("Main Texture", 2D) = "white" {}
-        _Strength("Strength", Range(0, 1)) = 0.5
+        _Strength("Strength", Range(0, 1)) = 0.4
     }
 
     SubShader
     {
         Pass
         {
-            Name "TOON"
+            Name "COLOR_SHADE"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -23,25 +22,22 @@ Shader "MeowToon/Texture"
             {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
-				float4 uv : TEXCOORD0;
+                float2 uv : TEXCOORD0;
             };
 
             struct v2f
             {
                 float4 pos : SV_POSITION;
-                float3 worldNormal : NORMAL;
-                float2 uv : TEXCOORD0;
+                float3 worldNormal : TEXCOORD0;
+                float2 uv : TEXCOORD1;
             };
-
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
 
             v2f vert(appdata v)
             {
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.uv = v.uv;
                 return o;
             }
 
@@ -52,8 +48,7 @@ Shader "MeowToon/Texture"
                 float3 l = normalize(_WorldSpaceLightPos0.xyz);
                 float3 n = normalize(i.worldNormal);
                 float interpolation = step(dot(n, l), 0);
-                float4 sample = tex2D(_MainTex, i.uv);
-                float3 final_color = sample * lerp(_Color, (1 - _Strength) * _Color, interpolation);
+                float3 final_color = lerp(_Color, (1 - _Strength) * _Color, interpolation);
                 return float4(final_color, 1);
             }
             ENDCG

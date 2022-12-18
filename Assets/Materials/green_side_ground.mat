@@ -8,8 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: green_side_ground
-  m_Shader: {fileID: 4800000, guid: 982e91eec96a5ed4684cb82cc01ba1bc, type: 3}
-  m_ValidKeywords: []
+  m_Shader: {fileID: 4800000, guid: 57ffe9405a022c54781d5b7ec21e86e6, type: 3}
+  m_ValidKeywords:
+  - USE_VERTEX_EXPANSION
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -141,7 +142,7 @@ Material:
     - _OutlineCullMode: 1
     - _OutlineLightingMix: 1
     - _OutlineScaledMaxDistance: 1
-    - _OutlineWidth: 0.5
+    - _OutlineWidth: 0.01
     - _OutlineWidthMode: 0
     - _Parallax: 0.02
     - _ReceiveShadowRate: 1
@@ -158,9 +159,10 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Strength: 0.5
+    - _Strength: 0.6
     - _TransparentWithZWrite: 0
     - _UVSec: 0
+    - _UseVertexExpansion: 1
     - _UvAnimRotation: 0
     - _UvAnimRotationSpeed: 0
     - _UvAnimScrollX: 0
