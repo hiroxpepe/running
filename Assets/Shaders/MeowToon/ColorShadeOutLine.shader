@@ -5,7 +5,7 @@ Shader "MeowToon/ColorShadeOutLine"
         _Color("Color", Color) = (1, 1, 1, 1)
         _Strength("Strength", Range(0, 1)) = 0.2
         _OutlineWidth ("Outline width", Range (0.0001, 0.03)) = 0.0005
-        [HDR] _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
+        _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
         [Toggle(USE_VERTEX_EXPANSION)] _UseVertexExpansion("Use vertex for Outline", int) = 0
     }
 
