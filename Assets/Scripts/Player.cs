@@ -124,7 +124,7 @@ namespace Studio.MeowToon {
             /// <summary>
             /// walk.
             /// </summary>
-            this.UpdateAsObservable().Where(predicate: _ => _up_button.isPressed && !_y_button.isPressed && !_do_update.safeWalking).Subscribe(onNext: _ => {
+            this.UpdateAsObservable().Where(predicate: _ => _up_button.isPressed && !_y_button.isPressed && !_do_update.virtualControllerMode).Subscribe(onNext: _ => {
                 if (_do_update.grounded) { _simple_anime.Play("Walk"); }
                 _do_fixed_update.ApplyWalk();
             }).AddTo(this);
@@ -138,7 +138,7 @@ namespace Studio.MeowToon {
             /// <summary>
             /// run.
             /// </summary>
-            this.UpdateAsObservable().Where(predicate: _ => _up_button.isPressed && _y_button.isPressed).Subscribe(onNext: _ => {
+            this.UpdateAsObservable().Where(predicate: _ => _up_button.isPressed && (_y_button.isPressed || _do_update.virtualControllerMode)).Subscribe(onNext: _ => {
                 if (_do_update.grounded) { _simple_anime.Play("Run"); }
                 _do_fixed_update.ApplyRun();
             }).AddTo(this);
@@ -174,6 +174,16 @@ namespace Studio.MeowToon {
             this.FixedUpdateAsObservable().Where(predicate: _ => _do_fixed_update.stop).Subscribe(onNext: _ => {
                 rb.velocity = new Vector3(0f, 0f, 0f);
                 _do_fixed_update.CancelStop();
+            }).AddTo(this);
+
+            /// <summary>
+            /// virtual controller mode.
+            /// </summary>
+            this.UpdateAsObservable().Where(predicate: _ => _y_button.wasReleasedThisFrame && useVirtualController).Subscribe(onNext: _ => {
+                _do_update.virtualControllerMode = true;
+                Observable.TimerFrame(45).Subscribe(onNext: __ => {
+                    _do_update.virtualControllerMode = false;
+                }).AddTo(this);
             }).AddTo(this);
 
             /// <summary>
