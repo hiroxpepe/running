@@ -164,6 +164,19 @@ namespace Studio.MeowToon {
             }).AddTo(this);
 
             /// <summary>
+            /// stop.
+            /// </summary>
+            this.UpdateAsObservable().Where(predicate: _ => _do_update.grounded && (_up_button.wasReleasedThisFrame || _down_button.wasReleasedThisFrame)).Subscribe(onNext: _ => {
+                //_simple_anime.Play("Stop");
+                _do_fixed_update.ApplyStop();
+            }).AddTo(this);
+
+            this.FixedUpdateAsObservable().Where(predicate: _ => _do_fixed_update.stop).Subscribe(onNext: _ => {
+                rb.velocity = new Vector3(0f, 0f, 0f);
+                _do_fixed_update.CancelStop();
+            }).AddTo(this);
+
+            /// <summary>
             /// jump.
             /// </summary>
             this.UpdateAsObservable().Where(predicate: _ => _b_button.wasPressedThisFrame && _do_update.grounded).Subscribe(onNext: _ => {
@@ -210,7 +223,7 @@ namespace Studio.MeowToon {
             /// <summary>
             /// safe walking.
             /// </summary>
-            //this.OnCollisionExitAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE) && !_y_button.isPressed).Subscribe(onNext: x => {
+            //this.OnCollisionExitAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE) && _up_button.isPressed && !_y_button.isPressed).Subscribe(onNext: x => {
             //    Debug.Log($"safe walking");
             //    _do_fixed_update.CancelWalk();
             //    _do_update.safeWalking = true;

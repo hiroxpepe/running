@@ -9,7 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: basic_blue
   m_Shader: {fileID: 4800000, guid: 7e37ee05bb2efd94c8dbb1bf3c7b4555, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - USE_VERTEX_EXPANSION
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -161,7 +162,7 @@ Material:
     - _Strength: 0.4
     - _TransparentWithZWrite: 0
     - _UVSec: 0
-    - _UseVertexExpansion: 0
+    - _UseVertexExpansion: 1
     - _UvAnimRotation: 0
     - _UvAnimRotationSpeed: 0
     - _UvAnimScrollX: 0
