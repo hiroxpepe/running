@@ -14,6 +14,7 @@
  */
 
 using static System.Math;
+using UnityEngine;
 
 namespace Studio.MeowToon {
     /// <summary>
@@ -31,7 +32,7 @@ namespace Studio.MeowToon {
             ///////////////////////////////////////////////////////////////////////////////////////
             // Fields [noun, adjectives] 
 
-            float _current_speed, _previous_speed, _forward_speed_limit, _run_speed_limit, _backward_speed_limit;
+            float _current_speed, _previous_speed, _forward_speed_limit, _run_speed_limit, _backward_speed_limit, _jump_power;
 
             ///////////////////////////////////////////////////////////////////////////////////////
             // Properties [noun, adjectives] 
@@ -57,23 +58,44 @@ namespace Studio.MeowToon {
                 }
             }
 
+            public float jumpPower  {
+                get {
+                    Debug.Log($"_current_speed: {_current_speed}");
+                    float value = 0f;
+                    if (_current_speed > 3.9f) {
+                        value = _jump_power * 1.35f;
+                    }
+                    else if (_current_speed > 2.5f) {
+                        value = _jump_power * 1.25f;
+                    }
+                    else if (_current_speed > 0) {
+                        value = _jump_power;
+                    }
+                    else if (_current_speed == 0) {
+                        value = _jump_power * 1.25f;
+                    }
+                    return value;
+                }
+            }
+
             ///////////////////////////////////////////////////////////////////////////////////////
             // Constructor
 
             /// <summary>
             /// hide the constructor.
             /// </summary>
-            Acceleration(float forward_speed_limit, float run_speed_limit, float backward_speed_limit) {
+            Acceleration(float forward_speed_limit, float run_speed_limit, float backward_speed_limit, float jump_power) {
                 _forward_speed_limit = forward_speed_limit;
                 _run_speed_limit = run_speed_limit;
                 _backward_speed_limit = backward_speed_limit;
+                _jump_power = jump_power;
             }
 
             /// <summary>
             /// returns an initialized instance.
             /// </summary>
-            public static Acceleration GetInstance(float forward_speed_limit, float run_speed_limit, float backward_speed_limit) {
-                return new Acceleration(forward_speed_limit, run_speed_limit, backward_speed_limit);
+            public static Acceleration GetInstance(float forward_speed_limit, float run_speed_limit, float backward_speed_limit, float jump_power) {
+                return new Acceleration(forward_speed_limit, run_speed_limit, backward_speed_limit, jump_power);
             }
         }
 

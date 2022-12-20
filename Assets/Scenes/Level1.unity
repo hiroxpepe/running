@@ -413,7 +413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7446116944425475587, guid: 030633c76bcced0479eea001b5024d70, type: 3}
       propertyPath: _jump_power
-      value: 9.5
+      value: 7.25
       objectReference: {fileID: 0}
     - target: {fileID: 7446116944425475587, guid: 030633c76bcced0479eea001b5024d70, type: 3}
       propertyPath: _simple_anime

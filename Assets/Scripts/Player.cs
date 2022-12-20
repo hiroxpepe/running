@@ -89,7 +89,7 @@ namespace Studio.MeowToon {
         void Awake() {
             _do_update = DoUpdate.GetInstance();
             _do_fixed_update = DoFixedUpdate.GetInstance();
-            _acceleration = Acceleration.GetInstance(_forward_speed_limit, _run_speed_limit, _backward_speed_limit);
+            _acceleration = Acceleration.GetInstance(_forward_speed_limit, _run_speed_limit, _backward_speed_limit, _jump_power);
         }
 
         // Start is called before the first frame update
@@ -198,7 +198,7 @@ namespace Studio.MeowToon {
             this.FixedUpdateAsObservable().Where(predicate: _ => _do_fixed_update.jump).Subscribe(onNext: _ => {
                 const float ADJUST_VALUE = 2.0f;
                 rb.useGravity = true;
-                rb.AddRelativeFor​​ce(force: up * _jump_power * ADD_FORCE_VALUE * ADJUST_VALUE, mode: ForceMode.Acceleration);
+                rb.AddRelativeFor​​ce(force: up * _acceleration.jumpPower * ADD_FORCE_VALUE * ADJUST_VALUE, mode: ForceMode.Acceleration);
                 _do_fixed_update.CancelJump();
             }).AddTo(this);
 
@@ -229,24 +229,6 @@ namespace Studio.MeowToon {
             this.OnCollisionExitAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE)).Subscribe(onNext: x => {
                 rb.useGravity = true;
             }).AddTo(this);
-
-            /// <summary>
-            /// safe walking.
-            /// </summary>
-            //this.OnCollisionExitAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE) && _up_button.isPressed && !_y_button.isPressed).Subscribe(onNext: x => {
-            //    Debug.Log($"safe walking");
-            //    _do_fixed_update.CancelWalk();
-            //    _do_update.safeWalking = true;
-            //    transform.position = previousPosition[12]; // FIXME:
-            //}).AddTo(this);
-
-            //this.UpdateAsObservable().Where(predicate: _ => _up_button.wasReleasedThisFrame).Subscribe(onNext: _ => {
-            //    _do_update.safeWalking = false;
-            //}).AddTo(this);
-
-            //this.UpdateAsObservable().Where(predicate: _ => _b_button.wasReleasedThisFrame && _do_update.grounded).Subscribe(onNext: _ => {
-            //    rb.velocity = new Vector3(0f, 0f, 0f);
-            //}).AddTo(this);
 
             // LateUpdate is called after all Update functions have been called.
             this.LateUpdateAsObservable().Subscribe(onNext: _ => {
