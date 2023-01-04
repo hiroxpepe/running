@@ -15,8 +15,8 @@
 
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using static UnityEngine.GameObject;
+using static UnityEngine.SceneManagement.SceneManager;
 using UniRx;
 using UniRx.Triggers;
 
@@ -65,15 +65,7 @@ namespace Studio.MeowToon {
             };
 
             // get player.
-            Player player = Find(name: Player_TYPE).Get<Player>();
-
-            /// <summary>
-            /// player on fell down.
-            /// spend points.
-            /// </summary>
-            //player.OnFellDown += () => {
-            //    SceneManager.LoadScene(sceneName: SCENE_LEVEL_1);
-            //};
+            //Player player = Find(name: Player_TYPE).Get<Player>();
         }
 
         // Start is called before the first frame update
@@ -106,18 +98,18 @@ namespace Studio.MeowToon {
             /// next level.
             /// </summary>
             this.UpdateAsObservable().Where(predicate: _ => (_a_button.wasPressedThisFrame) /**&& _game_system.beatLevel**/ && _is_home).Subscribe(onNext: _ => {
-                switch (SceneManager.GetActiveScene().name) {
+                switch (GetActiveScene().name) {
                     case SCENE_LEVEL_1:
                         Time.timeScale = 1f;
-                        SceneManager.LoadScene(sceneName: /**SCENE_LEVEL_2**/SCENE_ENDING);
+                        LoadScene(sceneName: /**SCENE_LEVEL_2**/SCENE_ENDING);
                         break;
                     case SCENE_LEVEL_2:
                         Time.timeScale = 1f;
-                        SceneManager.LoadScene(sceneName: SCENE_LEVEL_3);
+                        LoadScene(sceneName: SCENE_LEVEL_3);
                         break;
                     case SCENE_LEVEL_3:
                         Time.timeScale = 1f;
-                        SceneManager.LoadScene(sceneName: SCENE_ENDING);
+                        LoadScene(sceneName: SCENE_ENDING);
                         break;
                 }
             }).AddTo(this);
@@ -126,7 +118,7 @@ namespace Studio.MeowToon {
             /// restart game.
             /// </summary>
             this.UpdateAsObservable().Where(predicate: _ => _select_button.wasPressedThisFrame).Subscribe(onNext: _ => {
-                SceneManager.LoadScene(sceneName: SCENE_TITLE);
+                LoadScene(GetActiveScene().name);
             }).AddTo(this);
 
             ///////////////////////////////////////////////////////////////////////////////////////////////

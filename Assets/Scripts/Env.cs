@@ -49,6 +49,7 @@ namespace Studio.MeowToon {
         public const string Player_TYPE = "Orange";
         public const string HOME_TYPE = "Home";
         public const string LEVEL_TYPE = "Level";
+        public const string DESPAWN_TYPE = "Despawn";
 
         //public const string MESSAGE_LEVEL_START = "Get items!";
         public const string MESSAGE_LEVEL_CLEAR = "Level Clear!";

@@ -13,6 +13,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using UnityEngine;
 using static UnityEngine.GameObject;
 using static UnityEngine.SceneManagement.SceneManager;
 using UniRx;
@@ -22,16 +24,21 @@ using static Studio.MeowToon.Env;
 
 namespace Studio.MeowToon {
     /// <summary>
-    /// title scene
+    /// despawn class
     /// </summary>
     /// <author>h.adachi (STUDIO MeowToon)</author>
-    public class Title : InputMaper {
+    public class Despawn : MonoBehaviour {
 #nullable enable
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // Fields [noun, adjectives]
 
         GameSystem _game_system;
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        // public Events [verb, verb phrase]
+
+        public event Action? OnDespawn;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // update Methods
@@ -42,21 +49,14 @@ namespace Studio.MeowToon {
         }
 
         // Start is called before the first frame update
-        new void Start() {
-            base.Start();
-
+        void Start() {
             /// <summary>
-            /// open select.
+            /// when being touched player.
             /// </summary>
-            this.UpdateAsObservable().Where(predicate: _ => _select_button.wasPressedThisFrame).Subscribe(onNext: _ => {
-                LoadScene(sceneName: SCENE_SELECT);
-            }).AddTo(this);
-
-            /// <summary>
-            /// start level.
-            /// </summary>
-            this.UpdateAsObservable().Where(predicate: _ => (_start_button.wasPressedThisFrame || _a_button.wasPressedThisFrame)).Subscribe(onNext: _ => {
-                LoadScene(sceneName: SCENE_LEVEL_1);
+            this.OnTriggerEnterAsObservable().Where(predicate: x => x.Like(Player_TYPE)).Subscribe(onNext: x => {
+                Debug.Log($"despawn!");
+                OnDespawn?.Invoke();
+                LoadScene(GetActiveScene().name);
             }).AddTo(this);
         }
     }

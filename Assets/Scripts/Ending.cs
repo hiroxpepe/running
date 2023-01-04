@@ -13,8 +13,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using UnityEngine.SceneManagement;
 using static UnityEngine.GameObject;
+using static UnityEngine.SceneManagement.SceneManager;
 using UniRx;
 using UniRx.Triggers;
 
@@ -49,7 +49,7 @@ namespace Studio.MeowToon {
             /// go to title. 
             /// </summary>
             this.UpdateAsObservable().Where(predicate: _ => (_start_button.wasPressedThisFrame || _a_button.wasPressedThisFrame)).Subscribe(onNext: _ => {
-                SceneManager.LoadScene(SCENE_TITLE);
+                LoadScene(SCENE_TITLE);
             }).AddTo(this);
         }
     }

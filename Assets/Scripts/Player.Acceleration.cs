@@ -32,7 +32,9 @@ namespace Studio.MeowToon {
             ///////////////////////////////////////////////////////////////////////////////////////
             // Fields [noun, adjectives] 
 
-            float _current_speed, _previous_speed, _forward_speed_limit, _run_speed_limit, _backward_speed_limit, _jump_power;
+            Player _player;
+
+            float _current_speed, _previous_speed;
 
             ///////////////////////////////////////////////////////////////////////////////////////
             // Properties [noun, adjectives] 
@@ -41,11 +43,11 @@ namespace Studio.MeowToon {
 
             public float previousSpeed { get => _previous_speed; set => _previous_speed = value; }
 
-            public bool canWalk { get => _current_speed < _forward_speed_limit; }
+            public bool canWalk { get => _current_speed < _player._forward_speed_limit; }
 
-            public bool canRun { get => _current_speed < _run_speed_limit; }
+            public bool canRun { get => _current_speed < _player._run_speed_limit; }
 
-            public bool canBackward { get => _current_speed < _backward_speed_limit; }
+            public bool canBackward { get => _current_speed < _player._backward_speed_limit; }
 
             public bool freeze {
                 get {
@@ -60,20 +62,21 @@ namespace Studio.MeowToon {
 
             public float jumpPower  {
                 get {
-                    Debug.Log($"_current_speed: {_current_speed}");
                     float value = 0f;
-                    if (_current_speed > 3.9f) {
-                        value = _jump_power * 1.35f;
+                    //if (_current_speed > 3.9f) {
+                    //    value = _jump_power * 1.35f;
+                    //}
+                    //else 
+                    if (_player._y_button.isPressed || _player._do_update.virtualControllerMode) {
+                        value = _player._jump_power * 1.25f;
                     }
-                    else if (_current_speed > 2.5f) {
-                        value = _jump_power * 1.25f;
+                    else if (_player._up_button.isPressed || _player._down_button.isPressed) {
+                        value = _player._jump_power;
                     }
-                    else if (_current_speed > 0) {
-                        value = _jump_power;
+                    else if (!_player._up_button.isPressed && !_player._down_button.isPressed) {
+                        value = _player._jump_power * 1.25f;
                     }
-                    else if (_current_speed == 0) {
-                        value = _jump_power * 1.25f;
-                    }
+                    //Debug.Log($"value: {value}");
                     return value;
                 }
             }
@@ -84,18 +87,15 @@ namespace Studio.MeowToon {
             /// <summary>
             /// hide the constructor.
             /// </summary>
-            Acceleration(float forward_speed_limit, float run_speed_limit, float backward_speed_limit, float jump_power) {
-                _forward_speed_limit = forward_speed_limit;
-                _run_speed_limit = run_speed_limit;
-                _backward_speed_limit = backward_speed_limit;
-                _jump_power = jump_power;
+            Acceleration(Player player) {
+                _player = player;
             }
 
             /// <summary>
             /// returns an initialized instance.
             /// </summary>
-            public static Acceleration GetInstance(float forward_speed_limit, float run_speed_limit, float backward_speed_limit, float jump_power) {
-                return new Acceleration(forward_speed_limit, run_speed_limit, backward_speed_limit, jump_power);
+            public static Acceleration GetInstance(Player player) {
+                return new Acceleration(player);
             }
         }
 

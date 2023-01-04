@@ -75,8 +75,6 @@ namespace Studio.MeowToon {
 
         public event Action? OnGrounded;
 
-        public event Action? OnFellDown;
-
         /// <summary>
         /// changed event handler.
         /// </summary>
@@ -89,7 +87,7 @@ namespace Studio.MeowToon {
         void Awake() {
             _do_update = DoUpdate.GetInstance();
             _do_fixed_update = DoFixedUpdate.GetInstance();
-            _acceleration = Acceleration.GetInstance(_forward_speed_limit, _run_speed_limit, _backward_speed_limit, _jump_power);
+            _acceleration = Acceleration.GetInstance(this);
         }
 
         // Start is called before the first frame update
@@ -233,9 +231,6 @@ namespace Studio.MeowToon {
             // LateUpdate is called after all Update functions have been called.
             this.LateUpdateAsObservable().Subscribe(onNext: _ => {
                 position = transform.position;
-                //if (position.y < -10f) {
-                //    OnFellDown?.Invoke();
-                //}
                 rotation = transform.rotation;
                 cashPreviousPosition();
             }).AddTo(this);
