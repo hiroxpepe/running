@@ -54,7 +54,6 @@ namespace Studio.MeowToon {
             /// when being touched player.
             /// </summary>
             this.OnTriggerEnterAsObservable().Where(predicate: x => x.Like(Player_TYPE)).Subscribe(onNext: x => {
-                Debug.Log($"despawn!");
                 OnDespawn?.Invoke();
                 LoadScene(GetActiveScene().name);
             }).AddTo(this);

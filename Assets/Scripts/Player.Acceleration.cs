@@ -63,10 +63,6 @@ namespace Studio.MeowToon {
             public float jumpPower  {
                 get {
                     float value = 0f;
-                    //if (_current_speed > 3.9f) {
-                    //    value = _jump_power * 1.35f;
-                    //}
-                    //else 
                     if (_player._y_button.isPressed || _player._do_update.virtualControllerMode) {
                         value = _player._jump_power * 1.25f;
                     }
@@ -76,7 +72,6 @@ namespace Studio.MeowToon {
                     else if (!_player._up_button.isPressed && !_player._down_button.isPressed) {
                         value = _player._jump_power * 1.25f;
                     }
-                    //Debug.Log($"value: {value}");
                     return value;
                 }
             }

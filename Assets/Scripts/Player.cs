@@ -261,16 +261,18 @@ namespace Studio.MeowToon {
                 double reach = getReach(target: x.gameObject);
                 if (_do_update.grounded && (reach < 0.5d || reach >= 0.99d)) {
                     moveLetfOrRight(direction: getDirection(forward_vector: transform.forward));
+                    rb.useGravity = true;
                 }
                 else if (reach >= 0.5d && reach < 0.99d) {
-                    Debug.Log("freeze to moveTop()");
-                    Debug.Log($"reach: {reach}");
                     rb.useGravity = false;
                     moveTop();
+                    _do_update.grounded = true;
                     rb.useGravity = true;
                 }
                 else {
                     dropDown();
+                    _do_update.grounded = true;
+                    rb.useGravity = true;
                 }
             }).AddTo(this);
         }
@@ -329,7 +331,6 @@ namespace Studio.MeowToon {
         /// </summary>
         void moveTop() {
             const float MOVE_VALUE = 12.0f;
-            Debug.Log($"moveTop !");
             transform.position = new(
                 x: transform.position.x,
                 y: transform.position.y + MOVE_VALUE * Time.deltaTime,
@@ -341,8 +342,7 @@ namespace Studio.MeowToon {
         /// drop down when the player hits a block.
         /// </summary>
         void dropDown() {
-            const float MOVE_VALUE = 6.0f;
-            Debug.Log($"dropDown !");
+            const float MOVE_VALUE = 12.0f;
             transform.position = new(
                 x: transform.position.x,
                 y: transform.position.y - MOVE_VALUE * Time.deltaTime,
