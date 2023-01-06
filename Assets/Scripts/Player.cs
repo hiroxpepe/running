@@ -308,9 +308,9 @@ namespace Studio.MeowToon {
                     previousPosition[i] = previousPosition[i - 1];
                 } else if (i == 0) {
                     previousPosition[i] = new Vector3(
-                        (float) Math.Round(transform.position.x, 3),
-                        (float) Math.Round(transform.position.y, 3),
-                        (float) Math.Round(transform.position.z, 3)
+                        (float) Round(transform.position.x, 3),
+                        (float) Round(transform.position.y, 3),
+                        (float) Round(transform.position.z, 3)
                     );
                 }
             }
@@ -324,8 +324,8 @@ namespace Studio.MeowToon {
             int ADJUST_VALUE = 9;
             if (fps == 60) ADJUST_VALUE = 9;
             if (fps == 30) ADJUST_VALUE = 20;
-            float current_y = (float) Math.Round(transform.position.y, 1, MidpointRounding.AwayFromZero);
-            float previous_y = (float) Math.Round(previousPosition[ADJUST_VALUE].y, 1, MidpointRounding.AwayFromZero);
+            float current_y = (float) Round(transform.position.y, 1, MidpointRounding.AwayFromZero);
+            float previous_y = (float) Round(previousPosition[ADJUST_VALUE].y, 1, MidpointRounding.AwayFromZero);
             if (current_y == previous_y) {
                 return false;
             } else if (current_y != previous_y) {
@@ -343,8 +343,8 @@ namespace Studio.MeowToon {
             int ADJUST_VALUE = 9;
             if (fps == 60) ADJUST_VALUE = 9;
             if (fps == 30) ADJUST_VALUE = 20;
-            float current_y = (float) Math.Round(transform.position.y, 1, MidpointRounding.AwayFromZero);
-            float previous_y = (float) Math.Round(previousPosition[ADJUST_VALUE].y, 1, MidpointRounding.AwayFromZero);
+            float current_y = (float) Round(transform.position.y, 1, MidpointRounding.AwayFromZero);
+            float previous_y = (float) Round(previousPosition[ADJUST_VALUE].y, 1, MidpointRounding.AwayFromZero);
             //Debug.Log($"current_y: {current_y} previous_y: {previous_y}");
             if (current_y > previous_y) {
                 return false;
@@ -379,7 +379,7 @@ namespace Studio.MeowToon {
         /// drop down when the player hits a block.
         /// </summary>
         void dropDown() {
-            const float MOVE_VALUE = 12.0f;
+            const float MOVE_VALUE = 6.0f;
             transform.position = new(
                 x: transform.position.x,
                 y: transform.position.y - MOVE_VALUE * Time.deltaTime,
