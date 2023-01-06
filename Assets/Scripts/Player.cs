@@ -201,6 +201,25 @@ namespace Studio.MeowToon {
             }).AddTo(this);
 
             /// <summary>
+            /// stop jump.
+            /// </summary>
+            this.UpdateAsObservable().Where(predicate: _ => _b_button.wasReleasedThisFrame && !_do_update.grounded).Subscribe(onNext: _ => {
+                _do_fixed_update.ApplyStopJump();
+            }).AddTo(this);
+
+            this.FixedUpdateAsObservable().Where(predicate: _ => _do_fixed_update.stopJump).Subscribe(onNext: _ => {
+                const float ADJUST_VALUE = 0.05f;
+                Observable.Timer(TimeSpan.FromSeconds(ADJUST_VALUE)).Subscribe(onNext: _ => {
+                    if (!isDown()) {
+                        rb.useGravity = true;
+                        Vector3 velocity = rb.velocity;
+                        rb.velocity = new Vector3(x: velocity.x, y: 0, z: velocity.z);
+                    }
+                    _do_fixed_update.CancelStopJump();
+                }).AddTo(this);
+            }).AddTo(this);
+
+            /// <summary>
             /// rotate(yaw).
             /// </summary>
             this.UpdateAsObservable().Subscribe(onNext: _ => {
@@ -311,6 +330,24 @@ namespace Studio.MeowToon {
                 return false;
             } else if (current_y != previous_y) {
                 return true;
+            } else {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// whether there was a down movement.
+        /// </summary>
+        bool isDown() {
+            int fps = Application.targetFrameRate;
+            int ADJUST_VALUE = 9;
+            if (fps == 60) ADJUST_VALUE = 9;
+            if (fps == 30) ADJUST_VALUE = 20;
+            float current_y = (float) Math.Round(transform.position.y, 1, MidpointRounding.AwayFromZero);
+            float previous_y = (float) Math.Round(previousPosition[ADJUST_VALUE].y, 1, MidpointRounding.AwayFromZero);
+            //Debug.Log($"current_y: {current_y} previous_y: {previous_y}");
+            if (current_y > previous_y) {
+                return false;
             } else {
                 return true;
             }

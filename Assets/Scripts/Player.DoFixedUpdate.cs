@@ -32,7 +32,7 @@ namespace Studio.MeowToon {
             ///////////////////////////////////////////////////////////////////////////////////////
             // Fields [noun, adjectives] 
 
-            bool _idol, _run, _walk, _jump, _backward, _stop;
+            bool _idol, _run, _walk, _jump, _stop_jump, _backward, _stop;
 
             ///////////////////////////////////////////////////////////////////////////////////////
             // Properties [noun, adjectives] 
@@ -44,6 +44,8 @@ namespace Studio.MeowToon {
             public bool walk { get => _walk; }
 
             public bool jump { get => _jump; }
+
+            public bool stopJump { get => _stop_jump; }
 
             public bool backward { get => _backward; }
 
@@ -79,6 +81,10 @@ namespace Studio.MeowToon {
             public void ApplyJump() { _jump = true; }
 
             public void CancelJump() { _jump = false; }
+
+            public void ApplyStopJump() { _stop_jump = true; }
+
+            public void CancelStopJump() { _stop_jump = false; }
 
             public void ApplyStop() { _stop = true; }
 
