@@ -9,7 +9,7 @@ Shader "MeowToon/Texture"
     SubShader
     {
         Tags { "Queue" = "Transparent" }
-        Blend SrcAlpha OneMinusSrcAlpha 
+        Blend SrcAlpha OneMinusSrcAlpha
         Pass
         {
             Name "TEXTURE"

@@ -2,14 +2,17 @@ Shader "MeowToon/TextureShadow"
 {
     Properties
     {
+        _Color("Color", Color) = (1, 1, 1, 0.5)
         [NoScaleOffset] _MainTex("Main Texture", 2D) = "white" {}
     }
 
     SubShader
     {
-        Tags { "LightMode" = "ForwardBase" }
+        Tags { "Queue" = "Transparent" "LightMode" = "ForwardBase" }
+        Blend SrcAlpha OneMinusSrcAlpha
         Pass
         {
+            Name "TEXTURE_SHADOW"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -38,18 +41,23 @@ Shader "MeowToon/TextureShadow"
             }
 
             sampler2D _MainTex;
+            float4 _Color;
 
             fixed4 frag(v2f i) : SV_Target
             {
-                fixed4 color = tex2D(_MainTex, i.uv);
+                fixed4 texture_color = tex2D(_MainTex, i.uv);
                 fixed shadow = SHADOW_ATTENUATION(i);
                 fixed3 lighting = shadow + i.ambient;
-                color.rgb *= lighting;
-                return color;
+                texture_color.rgb *= lighting;
+                float4 final_color = texture_color * _Color;
+                final_color.a = _Color.a;
+                return final_color;
             }
             ENDCG
         }
 
         UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
     }
+
+    Fallback "Standard"
 }
