@@ -70,4 +70,6 @@ Shader "MeowToon/ColorShadeOutLine"
             ENDCG
         }
     }
+
+    Fallback "Standard"
 }

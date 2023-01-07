@@ -56,4 +56,6 @@ Shader "MeowToon/Texture"
             ENDCG
         }
     }
+
+    Fallback "Standard"
 }
