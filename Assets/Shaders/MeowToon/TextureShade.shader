@@ -3,7 +3,7 @@ Shader "MeowToon/TextureShade"
     Properties
     {
         _Color("Color", Color) = (1, 1, 1, 1)
-        _MainTex ("Main Texture", 2D) = "white" {}
+        [NoScaleOffset] _MainTex("Main Texture", 2D) = "white" {}
         _Strength("Strength", Range(0, 1)) = 0.6
     }
 

@@ -3,9 +3,9 @@ Shader "MeowToon/TextureOutLine"
     Properties
     {
         _Color("Color", Color) = (1, 1, 1, 1)
-        _MainTex ("Main Texture", 2D) = "white" {}
-        _OutlineWidth ("Outline width", Range (0.0001, 0.03)) = 0.0005
-        _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
+        [NoScaleOffset] _MainTex("Main Texture", 2D) = "white" {}
+        _OutlineWidth("Outline width", Range(0.0001, 0.03)) = 0.0005
+        _OutlineColor("Outline Color", Color) = (0, 0, 0, 1)
         [Toggle(USE_VERTEX_EXPANSION)] _UseVertexExpansion("Use vertex for Outline", int) = 0
     }
 
