@@ -150,7 +150,7 @@ namespace Studio.MeowToon {
             /// <summary>
             /// backward.
             /// </summary>
-            this.UpdateAsObservable().Where(predicate: _ => _do_update.grounded && _down_button.isPressed).Subscribe(onNext: _ => {
+            this.UpdateAsObservable().Where(predicate: _ => _down_button.isPressed).Subscribe(onNext: _ => {
                 _simple_anime.Play("Walk");
                 _do_fixed_update.ApplyBackward();
             }).AddTo(this);
