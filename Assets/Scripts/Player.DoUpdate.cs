@@ -32,14 +32,14 @@ namespace Studio.MeowToon {
             ///////////////////////////////////////////////////////////////////////////////////////
             // Fields [noun, adjectives] 
 
-            bool _grounded, _banking, _virtualControllerMode;
+            bool _grounded, _climbing, _virtualControllerMode;
 
             ///////////////////////////////////////////////////////////////////////////////////////
             // Properties [noun, adjectives] 
 
             public bool grounded { get => _grounded; set => _grounded = value; }
 
-            public bool banking { get => _banking; set => _banking = value; }
+            public bool climbing { get => _climbing; set => _climbing = value; }
 
             public bool virtualControllerMode { get => _virtualControllerMode; set => _virtualControllerMode = value; }
 
@@ -59,7 +59,7 @@ namespace Studio.MeowToon {
             // public Methods [verb]
 
             public void ResetState() {
-                _grounded = _banking = _virtualControllerMode = false;
+                _grounded = _climbing = _virtualControllerMode = false;
             }
         }
 

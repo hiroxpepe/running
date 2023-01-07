@@ -16,6 +16,7 @@
 using System;
 using static System.Math;
 using UnityEngine;
+using static UnityEngine.GameObject;
 using static UnityEngine.Vector3;
 using UniRx;
 using UniRx.Triggers;
@@ -54,7 +55,9 @@ namespace Studio.MeowToon {
 
         Acceleration _acceleration;
 
-        Vector3[] previousPosition = new Vector3[60]; // saves position 30 frames ago.
+        Vector3[] _previousPosition = new Vector3[60]; // saves position 30 frames ago.
+
+        GameObject _ray_box;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // Properties [noun, adjectives]
@@ -88,6 +91,7 @@ namespace Studio.MeowToon {
             _do_update = DoUpdate.GetInstance();
             _do_fixed_update = DoFixedUpdate.GetInstance();
             _acceleration = Acceleration.GetInstance(this);
+            _ray_box = Find(name: "RayBox");
         }
 
         // Start is called before the first frame update
@@ -115,7 +119,7 @@ namespace Studio.MeowToon {
                 _do_fixed_update.ApplyIdol();
             }).AddTo(this);
 
-            this.FixedUpdateAsObservable().Where(predicate: _ => _do_fixed_update.idol).Subscribe(onNext: _ => {
+            this.FixedUpdateAsObservable().Where(predicate: _ => !_do_update.climbing && _do_fixed_update.idol).Subscribe(onNext: _ => {
                 rb.useGravity = true;
             }).AddTo(this);
 
@@ -207,7 +211,7 @@ namespace Studio.MeowToon {
                 _do_fixed_update.ApplyStopJump();
             }).AddTo(this);
 
-            this.FixedUpdateAsObservable().Where(predicate: _ => _do_fixed_update.stopJump).Subscribe(onNext: _ => {
+            this.FixedUpdateAsObservable().Where(predicate: _ => !_do_update.climbing && _do_fixed_update.stopJump).Subscribe(onNext: _ => {
                 const float ADJUST_VALUE = 0.05f;
                 Observable.Timer(TimeSpan.FromSeconds(ADJUST_VALUE)).Subscribe(onNext: _ => {
                     if (!isDown()) {
@@ -231,7 +235,7 @@ namespace Studio.MeowToon {
             /// when touching blocks.
             /// TODO: to Block ?
             /// </summary>
-            this.OnCollisionEnterAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE)).Subscribe(onNext: x => {
+            this.OnCollisionEnterAsObservable().Where(predicate: x => !_do_update.climbing && x.Like(BLOCK_TYPE)).Subscribe(onNext: x => {
                 if (!isHitSide(target: x.gameObject)) {
                     _do_update.grounded = true;
                     rb.useGravity = true;
@@ -243,7 +247,7 @@ namespace Studio.MeowToon {
             /// when leaving blocks.
             /// TODO: to Block ?
             /// </summary>
-            this.OnCollisionExitAsObservable().Where(predicate: x => x.Like(BLOCK_TYPE)).Subscribe(onNext: x => {
+            this.OnCollisionExitAsObservable().Where(predicate: x => !_do_update.climbing && x.Like(BLOCK_TYPE)).Subscribe(onNext: x => {
                 rb.useGravity = true;
             }).AddTo(this);
 
@@ -275,8 +279,9 @@ namespace Studio.MeowToon {
             /// <summary>
             /// freeze.
             /// </summary>
-            this.OnCollisionStayAsObservable().Where(predicate: x => (x.Like(GROUND_TYPE) || x.Like(BLOCK_TYPE)) && (_up_button.isPressed || _down_button.isPressed) && _acceleration.freeze).Subscribe(onNext: x => {
+            this.OnCollisionStayAsObservable().Where(predicate: x => (x.Like(GROUND_TYPE) || x.Like(BLOCK_TYPE)) && !_do_update.climbing && (_up_button.isPressed || _down_button.isPressed) && _acceleration.freeze).Subscribe(onNext: x => {
                 if (!isHitSide(target: x.gameObject)) { return; }
+                Debug.Log("freeze!");
                 double reach = getReach(target: x.gameObject);
                 if (_do_update.grounded && (reach < 0.5d || reach >= 0.99d)) {
                     moveLetfOrRight(direction: getDirection(forward_vector: transform.forward));
@@ -294,6 +299,32 @@ namespace Studio.MeowToon {
                     rb.useGravity = true;
                 }
             }).AddTo(this);
+
+            /// <summary>
+            /// climb.
+            /// </summary>
+            _ray_box.gameObject.OnTriggerEnterAsObservable().Where(predicate: x => _y_button.isPressed && !_do_update.climbing && (x.Like(GROUND_TYPE) || x.Like(BLOCK_TYPE))).Subscribe(onNext: x => {
+                Debug.Log("climb on!");
+                _do_update.climbing = true;
+                rb.useGravity = false;
+                //rb.velocity = new Vector3(0f, 0f, 0f);
+            }).AddTo(_ray_box);
+
+            this.UpdateAsObservable().Where(predicate: x => _do_update.climbing && _up_button.isPressed).Subscribe(onNext: x => {
+                Debug.Log("up!");
+                _simple_anime.Play("Run"); // FIXME:
+                climbUp();
+            }).AddTo(this);
+
+            this.UpdateAsObservable().Where(predicate: x => _do_update.climbing && _y_button.wasReleasedThisFrame).Subscribe(onNext: x => {
+                _do_update.climbing = false;
+                rb.useGravity = true;
+            }).AddTo(this);
+
+            _ray_box.gameObject.OnTriggerExitAsObservable().Where(predicate: x => (x.Like(GROUND_TYPE) || x.Like(BLOCK_TYPE))).Subscribe(onNext: x => {
+                _do_update.climbing = false;
+                rb.useGravity = true;
+            }).AddTo(_ray_box);;
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -303,11 +334,11 @@ namespace Studio.MeowToon {
         /// saves position value for the previous n frame.
         /// </summary>
         void cashPreviousPosition() {
-            for (int i = previousPosition.Length - 1 ; i > -1; i--) {
+            for (int i = _previousPosition.Length - 1 ; i > -1; i--) {
                 if (i > 0) {
-                    previousPosition[i] = previousPosition[i - 1];
+                    _previousPosition[i] = _previousPosition[i - 1];
                 } else if (i == 0) {
-                    previousPosition[i] = new Vector3(
+                    _previousPosition[i] = new Vector3(
                         (float) Round(transform.position.x, 3),
                         (float) Round(transform.position.y, 3),
                         (float) Round(transform.position.z, 3)
@@ -325,7 +356,7 @@ namespace Studio.MeowToon {
             if (fps == 60) ADJUST_VALUE = 9;
             if (fps == 30) ADJUST_VALUE = 20;
             float current_y = (float) Round(transform.position.y, 1, MidpointRounding.AwayFromZero);
-            float previous_y = (float) Round(previousPosition[ADJUST_VALUE].y, 1, MidpointRounding.AwayFromZero);
+            float previous_y = (float) Round(_previousPosition[ADJUST_VALUE].y, 1, MidpointRounding.AwayFromZero);
             if (current_y == previous_y) {
                 return false;
             } else if (current_y != previous_y) {
@@ -344,7 +375,7 @@ namespace Studio.MeowToon {
             if (fps == 60) ADJUST_VALUE = 9;
             if (fps == 30) ADJUST_VALUE = 20;
             float current_y = (float) Round(transform.position.y, 1, MidpointRounding.AwayFromZero);
-            float previous_y = (float) Round(previousPosition[ADJUST_VALUE].y, 1, MidpointRounding.AwayFromZero);
+            float previous_y = (float) Round(_previousPosition[ADJUST_VALUE].y, 1, MidpointRounding.AwayFromZero);
             //Debug.Log($"current_y: {current_y} previous_y: {previous_y}");
             if (current_y > previous_y) {
                 return false;
@@ -363,6 +394,17 @@ namespace Studio.MeowToon {
             return Round(value: rate_for_one, digits: 2);
         }
 
+        /// <summary>
+        /// climb up.
+        /// </summary>
+        void climbUp() {
+            const float MOVE_VALUE = 1.5f;
+            transform.position = new(
+                x: transform.position.x,
+                y: transform.position.y + MOVE_VALUE * Time.deltaTime,
+                z: transform.position.z
+            );
+        }
         /// <summary>
         /// move top when the player hits a block.
         /// </summary>
