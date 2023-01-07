@@ -251,13 +251,6 @@ namespace Studio.MeowToon {
                 rb.useGravity = true;
             }).AddTo(this);
 
-            // LateUpdate is called after all Update functions have been called.
-            this.LateUpdateAsObservable().Subscribe(onNext: _ => {
-                position = transform.position;
-                rotation = transform.rotation;
-                cashPreviousPosition();
-            }).AddTo(this);
-
             /// <summary>
             /// when touching grounds.
             /// </summary>
@@ -281,8 +274,9 @@ namespace Studio.MeowToon {
             /// </summary>
             this.OnCollisionStayAsObservable().Where(predicate: x => (x.Like(GROUND_TYPE) || x.Like(BLOCK_TYPE)) && !_do_update.climbing && (_up_button.isPressed || _down_button.isPressed) && _acceleration.freeze).Subscribe(onNext: x => {
                 if (!isHitSide(target: x.gameObject)) { return; }
-                Debug.Log("freeze!");
+                //Debug.Log("freeze!");
                 double reach = getReach(target: x.gameObject);
+                //Debug.Log($"reach: {reach}");
                 if (_do_update.grounded && (reach < 0.5d || reach >= 0.99d)) {
                     moveLetfOrRight(direction: getDirection(forward_vector: transform.forward));
                     rb.useGravity = true;
@@ -304,14 +298,13 @@ namespace Studio.MeowToon {
             /// climb.
             /// </summary>
             _ray_box.gameObject.OnTriggerEnterAsObservable().Where(predicate: x => _y_button.isPressed && !_do_update.climbing && (x.Like(GROUND_TYPE) || x.Like(BLOCK_TYPE))).Subscribe(onNext: x => {
-                Debug.Log("climb on!");
+                //Debug.Log("climb on!");
                 _do_update.climbing = true;
                 rb.useGravity = false;
-                //rb.velocity = new Vector3(0f, 0f, 0f);
             }).AddTo(_ray_box);
 
             this.UpdateAsObservable().Where(predicate: x => _do_update.climbing && _up_button.isPressed).Subscribe(onNext: x => {
-                Debug.Log("up!");
+                //Debug.Log("up!");
                 _simple_anime.Play("Run"); // FIXME:
                 climbUp();
             }).AddTo(this);
@@ -324,7 +317,14 @@ namespace Studio.MeowToon {
             _ray_box.gameObject.OnTriggerExitAsObservable().Where(predicate: x => (x.Like(GROUND_TYPE) || x.Like(BLOCK_TYPE))).Subscribe(onNext: x => {
                 _do_update.climbing = false;
                 rb.useGravity = true;
-            }).AddTo(_ray_box);;
+            }).AddTo(_ray_box);
+
+            // LateUpdate is called after all Update functions have been called.
+            this.LateUpdateAsObservable().Subscribe(onNext: _ => {
+                position = transform.position;
+                rotation = transform.rotation;
+                cashPreviousPosition();
+            }).AddTo(this);
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -376,7 +376,6 @@ namespace Studio.MeowToon {
             if (fps == 30) ADJUST_VALUE = 20;
             float current_y = (float) Round(transform.position.y, 1, MidpointRounding.AwayFromZero);
             float previous_y = (float) Round(_previousPosition[ADJUST_VALUE].y, 1, MidpointRounding.AwayFromZero);
-            //Debug.Log($"current_y: {current_y} previous_y: {previous_y}");
             if (current_y > previous_y) {
                 return false;
             } else {
@@ -388,9 +387,14 @@ namespace Studio.MeowToon {
         /// the value until the top of the block.
         /// </summary>
         double getReach(GameObject target) {
+            //Debug.Log($"name: {target.name}");
             float distance_y = transform.position.y - target.transform.position.y;
-            float size_to_one = 1.0f / target.Get<Renderer>().bounds.size.y;
+            //Debug.Log($"distance_y: {distance_y}");
+            //Debug.Log($"bounds.size.y: {target.Get<Renderer>().bounds.size.y}");
+            float size_to_one = 1.0f * target.Get<Renderer>().bounds.size.y;
+            //Debug.Log($"size_to_one: {size_to_one}");
             float rate_for_one = distance_y * size_to_one;
+            //Debug.Log($"rate_for_one: {rate_for_one}");
             return Round(value: rate_for_one, digits: 2);
         }
 
